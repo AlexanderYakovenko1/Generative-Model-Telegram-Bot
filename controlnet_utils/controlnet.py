@@ -4,15 +4,10 @@ import PIL
 
 from controlnet_utils.load_models import load_model
 
-prompt = "pale golden rod circle with old lace background"
-
-
-# image.save("./output.png")
-
 
 class Controlnet:
     def __init__(self):
-        self.model_dir = "/home/vmeshchaninov/Education/Generative-Model-Telegram-Bot/models"  
+        self.model_dir = "/home/vmeshchaninov/Education/Generative-Model-Telegram-Bot/models"
         self.pipeline = load_model(self.model_dir)
 
     def generate_image(
