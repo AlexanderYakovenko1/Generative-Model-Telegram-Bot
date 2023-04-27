@@ -23,7 +23,7 @@ def create_edges() -> None:
     control_image.save("./bird_edges.png")
 
 
-def test() -> None:
+def test_prompt_sketch() -> None:
     prompt = "a blue paradise bird in the jungle"
 
     control_image = Image.open("controlnet_utils/bird_edges.png")
@@ -31,8 +31,16 @@ def test() -> None:
     controlnet = Controlnet()
 
     image = controlnet.generate_image(prompt=prompt, control_image=control_image)
-    image.save('controlnet_utils/image_out.png')
+    image.save('controlnet_utils/image_test_prompt_scetch.png')
+
+
+def test_prompt() -> None:
+    prompt = "a blue paradise bird in the jungle"
+    controlnet = Controlnet()
+
+    image = controlnet.generate_image(prompt=prompt)
+    image.save('controlnet_utils/image_test_prompt.png')
 
 
 if __name__ == "__main__":
-    test()
+    test_prompt_sketch()
