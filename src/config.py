@@ -1,6 +1,4 @@
-"""
-Bot configuration file
-"""
+"""Bot configuration file."""
 
 #: Path to controlnet weights
 MODEL_PATH = "/path/to/model/weights"
