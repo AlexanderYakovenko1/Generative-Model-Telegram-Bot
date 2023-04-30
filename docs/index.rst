@@ -12,6 +12,7 @@ Welcome to Generative model Telegram Bot's documentation!
 
    build
    modules
+   testing
 
 
 Indices and tables
