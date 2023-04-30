@@ -1,6 +1,6 @@
 """Test for queue module."""
 
-from src.queue import nothing
+from src.task_queue import nothing
 
 
 class TestQueue:
