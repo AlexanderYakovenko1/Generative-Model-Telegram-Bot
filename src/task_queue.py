@@ -5,22 +5,27 @@ import queue
 from typing import Callable, Any
 
 
-def nothing():
-    """Empty function, only exists for testing during development."""
-    return "I do nothing"
-
-
-def worker(work_queue: mp.Queue, output_queue: mp.Queue):
+def worker(work_queue: mp.Queue, output_queue: mp.Queue, create_state: Callable = None):
     """Worker function.
 
-    Retrieves tasks from ``work_queue``, puts outputs into ``output_queue``
+    Retrieves tasks from ``work_queue``, puts outputs into ``output_queue``.
+    Optionally initializes state and uses said state as the first argument to functions.
 
     :param work_queue: mp.Queue with incoming tasks, contains tuples with (id, func, args, kwargs), where
                        id -- task identifier, func -- function to run, args/kwargs -- func arguments
     :param output_queue: mp.Queue with function outputs in (id, output) format
+    :param create_state: a function that initializes worker state
     """
+    state = None
+    if create_state is not None:
+        state = create_state()
+
     for identifier, func, args, kwargs in iter(work_queue.get, 'STOP'):
-        output = func(*args, **kwargs)
+        if create_state is not None:
+            output = func(state, *args, **kwargs)
+        else:
+            output = func(*args, **kwargs)
+
         output_queue.put((identifier, output))
 
 
@@ -30,14 +35,16 @@ class TaskQueue:
     Results are deleted after query.
     """
 
-    def __init__(self, num_workers=4, queue_size=10):
+    def __init__(self, num_workers: int = 4, queue_size: int = 10, create_state: Callable = None):
         """Create TaskQueue and launch workers.
 
         :param num_workers: number of mp.Processes launched
         :param queue_size: max size of tasks in queue
+        :param create_state: function that sets up state of each worker on launch
         """
         self.num_workers = num_workers
         self.queue_size = queue_size
+        self.create_state = create_state
 
         self.processes = []
         self.task_queue = mp.Queue(maxsize=queue_size)
@@ -51,9 +58,11 @@ class TaskQueue:
         self.__terminate_workers()
 
     def __launch_workers(self):
-        """Laumch worker processes."""
+        """Launch worker processes."""
         for i in range(self.num_workers):
-            self.processes.append(mp.Process(target=worker, args=(self.task_queue, self.output_queue)))
+            self.processes.append(
+                mp.Process(target=worker, args=(self.task_queue, self.output_queue, self.create_state))
+            )
 
         for p in self.processes:
             p.start()
