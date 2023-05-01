@@ -1,3 +1,4 @@
+"""Stable Diffusion loading."""
 import torch
 from typing import Tuple, Union
 from diffusers import StableDiffusionControlNetPipeline, \
@@ -7,14 +8,27 @@ from diffusers import StableDiffusionControlNetPipeline, \
 
 
 def speedup_pipeline(pipeline: Union[StableDiffusionPipeline, StableDiffusionControlNetPipeline]) -> None:
+    """
+    Speed up pipeline setting up scheduler, xformers, cpu_offload.
+
+    :param pipeline: StableDiffusionPipeline with modifications
+    :return: None
+    """
     pipeline.scheduler = UniPCMultistepScheduler.from_config(pipeline.scheduler.config)
     pipeline.enable_xformers_memory_efficient_attention()
     pipeline.enable_model_cpu_offload()
 
 
 def load_model(model_dir: str) -> Tuple[StableDiffusionPipeline, StableDiffusionControlNetPipeline]:
-    # load control net and stable diffusion v1-5
+    """Load Pipelines.
 
+    Load two pipelines for text to image generation (stable diffusion)
+    and text to image with additional image condition (stable diffusion with controlnet).
+
+    :param model_dir: path to directory with model weights
+    :return: pipeline SD, pipeline SD with ControlNet
+    """
+    # load control net and stable diffusion v1-5
     torch_dtype = torch.float16
 
     controlnet = ControlNetModel.from_pretrained(
@@ -23,7 +37,7 @@ def load_model(model_dir: str) -> Tuple[StableDiffusionPipeline, StableDiffusion
         cache_dir=model_dir,
     )
 
-    pipeline_sd = pipeline_sketch = StableDiffusionPipeline.from_pretrained(
+    pipeline_sd = StableDiffusionPipeline.from_pretrained(
         pretrained_model_name_or_path="runwayml/stable-diffusion-v1-5",
         torch_dtype=torch_dtype,
         cache_dir=model_dir,
