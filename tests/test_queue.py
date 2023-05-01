@@ -16,8 +16,22 @@ def fast_func(inp):
     return inp
 
 
+def create_state():
+    """Sample function that creates state."""
+    return {
+        "a": 10,
+        "b": "STATE"
+    }
+
+
+def func_with_state(state, a=1, b="postfix"):
+    """Sample function that uses state variables."""
+    sleep(1)
+    return state['a'] * state['b'] + a * b
+
+
 class TestQueue:
-    """A suite of tests for Queue class."""
+    """A suite of tests for TaskQueue class."""
 
     def test_one_task_at_a_time(self):
         """Test that tasks complete and return the expected results."""
@@ -82,3 +96,21 @@ class TestQueue:
             final_get_results.append(tq.get_result(f"{i}"))
 
         assert any(final_get_results) is True
+
+    def test_state_creation_and_use(self):
+        """Test that the state is correctly created in all the workers."""
+        test_state = create_state()
+        prefix = func_with_state(test_state, 0)
+
+        tq = TaskQueue(num_workers=4, queue_size=10, create_state=create_state)
+
+        for i in range(4):
+            tq.put_task(f"{i}", func_with_state, a=i**2, b="S")
+
+        tq.close()
+        results = []
+        for i in range(4):
+            results.append(tq.get_result(f"{i}"))
+
+        assert len(set(results)) == 4
+        assert all([prefix in res[1] for res in results])
