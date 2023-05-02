@@ -4,3 +4,4 @@ exclude =
     venv
     .git
     docs
+ignore = F401, E402

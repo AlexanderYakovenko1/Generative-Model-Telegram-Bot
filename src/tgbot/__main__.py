@@ -1,3 +1,4 @@
+"""Start bot process."""
 import argparse
 import asyncio
 import logging
@@ -5,7 +6,7 @@ import sys
 import os
 
 
-from aiogram import Bot, Dispatcher, Router
+from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage, SimpleEventIsolation
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -26,14 +27,16 @@ logger = logging.getLogger(__name__)
 
 
 def parse_args():
+    """Parse CLI arguments."""
     parser = argparse.ArgumentParser()
-    parser.add_argument('--num_workers', type=int, default=1, 
-        help="Количество воркеров для обработки запросов на генерацию")
+    parser.add_argument('--num_workers', type=int, default=1,
+                        help="Количество воркеров для обработки запросов на генерацию")
 
     return parser.parse_args()
 
 
 async def main():
+    """Set up logging, queue, etc and start polling."""
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
@@ -52,9 +55,9 @@ async def main():
     dp.message.middleware.register(GenerateMiddleware(task_queue, tasks))
 
     scheduler = AsyncIOScheduler({"apscheduler.timezone": "Europe/Moscow"})
-    
-    
-    scheduler.add_job(send_generated, trigger="interval", seconds=5, kwargs={"bot": bot, "task_queue": task_queue, "tasks": tasks})
+
+    scheduler.add_job(send_generated, trigger="interval", seconds=5,
+                      kwargs={"bot": bot, "task_queue": task_queue, "tasks": tasks})
     scheduler.start()
 
     register_handlers(dp=dp)
@@ -74,7 +77,7 @@ if __name__ == "__main__":
     args = parse_args()
     try:
         tasks = dict()
-        task_queue = TaskQueue(num_workers=args.num_workers, create_state=Controlnet)
+        task_queue = TaskQueue(num_workers=args.num_workers, create_state=Controlnet, context='spawn')
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
         logger.error("Bot has killed!")

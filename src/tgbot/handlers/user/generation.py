@@ -6,7 +6,7 @@ from aiogram import Dispatcher, Bot
 from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
-from PIL import Image
+from PIL import Image, ImageOps
 from googletrans import Translator
 
 from src.task_queue import TaskQueue
@@ -18,6 +18,8 @@ translator = Translator()
 
 
 def generate_image(controlnet, prompt, control_image=None):
+    if control_image is not None:
+        control_image = ImageOps.invert(control_image)
     image = controlnet.generate_image(prompt, control_image)
     return image
 
@@ -59,7 +61,7 @@ async def sketch(m: Message, state: FSMContext):
             "Ниже вам предложен холст для рисования. "
             "Следущим сообщением отправьте ваш набросок."
         )
-        await m.reply_photo(photo=config.ms.white_file_id)
+        await m.reply_photo(photo=config.ms.bg_file_id)
         await state.update_data(prompt=prompt)
         await state.update_data(task_id=task_id)
         await state.set_state(SketchStates.sketch)

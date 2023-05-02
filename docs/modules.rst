@@ -6,3 +6,4 @@ Modules
 
     config
     queue
+    tgbot
