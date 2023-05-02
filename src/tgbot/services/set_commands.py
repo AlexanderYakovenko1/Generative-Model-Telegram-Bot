@@ -1,8 +1,10 @@
+"""Bot command set up functions."""
 from aiogram import Bot
 from aiogram.types import BotCommand, BotCommandScopeDefault
 
 
 async def set_commands(bot: Bot):
+    """Set up main user commands."""
     commands = [
         BotCommand(
             command="start",

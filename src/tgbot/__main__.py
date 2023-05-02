@@ -1,3 +1,4 @@
+"""Start bot process."""
 import argparse
 import asyncio
 import logging
@@ -26,6 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 def parse_args():
+    """Parse CLI arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_workers', type=int, default=1,
                         help="Количество воркеров для обработки запросов на генерацию")
@@ -34,6 +36,7 @@ def parse_args():
 
 
 async def main():
+    """Set up logging, queue, etc and start polling."""
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",

@@ -13,8 +13,7 @@ class Controlnet:
     """The network for text to image generation."""
 
     def __init__(self, config=load_config()):
-        """
-        Create Stable Diffusion and load weights.
+        """Create Stable Diffusion and load weights.
 
         :param config: configuration for Stable Diffusion
         """
@@ -29,8 +28,7 @@ class Controlnet:
                 torch.FloatTensor, PIL.Image.Image, List[torch.FloatTensor], List[PIL.Image.Image]] = None,
             seed: int = None,
     ) -> PIL.Image.Image:
-        """
-        Text to image generation.
+        """Text to image generation.
 
         :param prompt: text for conditional image generation
         :param control_image: sketch for image restoration,
