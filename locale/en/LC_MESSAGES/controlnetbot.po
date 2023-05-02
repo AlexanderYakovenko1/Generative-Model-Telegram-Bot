@@ -1,0 +1,92 @@
+# English translations for PROJECT.
+# Copyright (C) 2023 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2023.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2023-05-02 17:49+0300\n"
+"PO-Revision-Date: 2023-05-02 17:55+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.12.1\n"
+
+#: src/tgbot/__main__.py:36
+msgid "Количество воркеров для обработки запросов на генерацию"
+msgstr "Number of workers to process generation requests"
+
+#: src/tgbot/handlers/admin/bot_state.py:17
+msgid "Бот запущен"
+msgstr "Bot started"
+
+#: src/tgbot/handlers/admin/bot_state.py:24
+msgid "Бот остановлен"
+msgstr "Bot stoped"
+
+#: src/tgbot/handlers/user/generation.py:45
+msgid "Ваш запрос на генерацию по затравке {raw_prompt} поставлен в очередь"
+msgstr "Your generate request by prompt {raw_prompt} is queued"
+
+#: src/tgbot/handlers/user/generation.py:47
+#: src/tgbot/handlers/user/generation.py:108
+msgid "Попробуйте позже, очередь переполнена"
+msgstr "Try later, the queue is full"
+
+#: src/tgbot/handlers/user/generation.py:50
+msgid "Неверный формат ввода затраки. Попробуйте ещё раз /generate [затравка]"
+msgstr "Invalid prompt format. Please, try again /generate [prompt]"
+
+#: src/tgbot/handlers/user/generation.py:70
+msgid ""
+"Для генерации будет использована затравка: {raw_prompt}. Ниже вам "
+"предложен холст для рисования. Следущим сообщением отправьте ваш "
+"набросок."
+msgstr ""
+"Prompt: {raw_prompt}.Below is a canvas for you to draw onSend your sketch"
+" in the next message."
+
+#: src/tgbot/handlers/user/generation.py:80
+msgid "Неверный формат ввода затраки. Попробуйте ещё раз /sketch [затравка]"
+msgstr "Not valid prompt format. Try again /sketch [prompt]"
+
+#: src/tgbot/handlers/user/generation.py:106
+msgid "Ваш запрос на генерацию по наброску поставлен в очередь"
+msgstr "Your sketch generation request is queued up"
+
+#: src/tgbot/handlers/user/start.py:18
+msgid ""
+"Приветствую, {user}. Этот бот может генерировать изображние по запросу, а"
+" так же наброску. Для генерации по запросу воспользуйся командой "
+"/generate [затравка], по наброску /sketch [затравка]"
+msgstr ""
+"Hello, {user}. This bot cat generate images conditioned ontext prompt, "
+"and also image prompts via sketch.For generating via text use /generate "
+"[prompt], for sketch use /sketch [prompt]"
+
+#: src/tgbot/services/set_commands.py:18
+msgid "Начало работы"
+msgstr "Start"
+
+#: src/tgbot/services/set_commands.py:22
+msgid "Сгенерировать изображение по текстовому описанию"
+msgstr "Generate image using text description"
+
+#: src/tgbot/services/set_commands.py:26
+msgid "Сгенерировать изображение по наброску"
+msgstr "Generate image using sketch"
+
+#: src/tgbot/services/set_commands.py:30
+msgid "Перерисовать с новой затравкой"
+msgstr "Redraw using new prompt"
+
+#: src/tgbot/services/set_commands.py:34
+msgid "Перерисовать скетч"
+msgstr "Redraw using new sketch"
+

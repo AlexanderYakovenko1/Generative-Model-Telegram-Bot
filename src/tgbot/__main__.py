@@ -4,6 +4,7 @@ import asyncio
 import logging
 import sys
 import os
+import gettext
 
 
 from aiogram import Bot, Dispatcher
@@ -25,12 +26,14 @@ from src.config import load_config
 
 logger = logging.getLogger(__name__)
 
+translation = gettext.translation("controlnetbot", "locale", fallback=True)
+_ = translation.gettext
 
 def parse_args():
     """Parse CLI arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument('--num_workers', type=int, default=1,
-                        help="Количество воркеров для обработки запросов на генерацию")
+                        help=_("Количество воркеров для обработки запросов на генерацию"))
 
     return parser.parse_args()
 
@@ -63,7 +66,7 @@ async def main():
     register_handlers(dp=dp)
 
     try:
-        await set_commands(bot)
+        await set_commands(bot, config)
         await dp.start_polling(bot, config=config)
     finally:
         await dp.fsm.storage.close()
