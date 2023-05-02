@@ -41,12 +41,18 @@ def load_model(model_dir: str) -> Tuple[StableDiffusionPipeline, StableDiffusion
         pretrained_model_name_or_path="runwayml/stable-diffusion-v1-5",
         torch_dtype=torch_dtype,
         cache_dir=model_dir,
+        safety_checker=None,
+        feature_extractor=None,
+        requires_safety_checker=False
     )
     pipeline_sketch = StableDiffusionControlNetPipeline.from_pretrained(
         pretrained_model_name_or_path="runwayml/stable-diffusion-v1-5",
         controlnet=controlnet,
         torch_dtype=torch_dtype,
         cache_dir=model_dir,
+        safety_checker=None,
+        feature_extractor=None,
+        requires_safety_checker=False
     )
 
     # speed up diffusion process with faster scheduler and memory optimization
