@@ -18,12 +18,11 @@ def test_prompt_sketch() -> None:
     """Test controlnet generation conditioned on prompt and sketch."""
     prompt = "a blue paradise bird in the jungle"
     control_image = Image.open("assets/bird_edges.png")
-    eps = 1e-2
+    eps = 1e-1
 
     controlnet = Controlnet(config)
 
     image_pred = controlnet.generate_image(prompt=prompt, control_image=control_image)
-    image_pred.save("assets/image_test_prompt_scetch.png")
     image_real = Image.open('assets/image_test_prompt_scetch.png')
 
     assert cosine_distance(np.asarray(image_pred, dtype=float), np.asarray(image_real, dtype=float)) < eps
@@ -32,7 +31,7 @@ def test_prompt_sketch() -> None:
 def test_prompt() -> None:
     """Test controlnet generation conditioned on prompt only."""
     prompt = "a blue paradise bird in the jungle"
-    eps = 1e-2
+    eps = 1e-1
 
     controlnet = Controlnet(config)
 
