@@ -47,7 +47,7 @@ class TaskQueue:
         self.create_state = create_state
 
         self.processes = []
-        self.ctx = mp.get_context('fork')
+        self.ctx = mp.get_context(context)
         self.task_queue = self.ctx.Queue(maxsize=queue_size)
         self.output_queue = self.ctx.Queue()
         self.outputs = {}
