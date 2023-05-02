@@ -35,7 +35,7 @@ class TaskQueue:
     Results are deleted after query.
     """
 
-    def __init__(self, num_workers: int = 4, queue_size: int = 10, create_state: Callable = None):
+    def __init__(self, num_workers: int = 4, queue_size: int = 10, create_state: Callable = None, context='fork'):
         """Create TaskQueue and launch workers.
 
         :param num_workers: number of mp.Processes launched
@@ -47,8 +47,9 @@ class TaskQueue:
         self.create_state = create_state
 
         self.processes = []
-        self.task_queue = mp.Queue(maxsize=queue_size)
-        self.output_queue = mp.Queue()
+        self.ctx = mp.get_context(context)
+        self.task_queue = self.ctx.Queue(maxsize=queue_size)
+        self.output_queue = self.ctx.Queue()
         self.outputs = {}
 
         self.__launch_workers()
@@ -61,7 +62,7 @@ class TaskQueue:
         """Launch worker processes."""
         for i in range(self.num_workers):
             self.processes.append(
-                mp.Process(target=worker, args=(self.task_queue, self.output_queue, self.create_state))
+                self.ctx.Process(target=worker, args=(self.task_queue, self.output_queue, self.create_state))
             )
 
         for p in self.processes:
