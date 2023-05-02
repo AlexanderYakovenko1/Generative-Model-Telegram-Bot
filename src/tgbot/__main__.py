@@ -74,7 +74,7 @@ if __name__ == "__main__":
     args = parse_args()
     try:
         tasks = dict()
-        task_queue = TaskQueue(num_workers=args.num_workers, create_state=Controlnet)
+        task_queue = TaskQueue(num_workers=args.num_workers, create_state=Controlnet, context='spawn')
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
         logger.error("Bot has killed!")

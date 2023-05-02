@@ -6,19 +6,20 @@ import numpy as np
 from typing import Union, List
 
 from src.load_models import load_model
+from src.config import load_config
 
 
 class Controlnet:
     """The network for text to image generation."""
 
-    def __init__(self, config):
+    def __init__(self, config=load_config()):
         """
         Create Stable Diffusion and load weights.
 
         :param config: configuration for Stable Diffusion
         """
-        self.model_dir = config.MODEL_PATH
-        self.num_inference_steps = config.NUM_INFERENCE_STEPS
+        self.model_dir = config.ms.model_path
+        self.num_inference_steps = config.ms.num_inference_steps
         self.pipeline_sd, self.pipeline_sketch = load_model(self.model_dir)
 
     def generate_image(
