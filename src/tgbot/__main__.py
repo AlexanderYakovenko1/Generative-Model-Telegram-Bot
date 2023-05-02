@@ -5,7 +5,7 @@ import sys
 import os
 
 
-from aiogram import Bot, Dispatcher, Router
+from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage, SimpleEventIsolation
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -27,8 +27,8 @@ logger = logging.getLogger(__name__)
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--num_workers', type=int, default=1, 
-        help="Количество воркеров для обработки запросов на генерацию")
+    parser.add_argument('--num_workers', type=int, default=1,
+                        help="Количество воркеров для обработки запросов на генерацию")
 
     return parser.parse_args()
 
@@ -52,9 +52,9 @@ async def main():
     dp.message.middleware.register(GenerateMiddleware(task_queue, tasks))
 
     scheduler = AsyncIOScheduler({"apscheduler.timezone": "Europe/Moscow"})
-    
-    
-    scheduler.add_job(send_generated, trigger="interval", seconds=5, kwargs={"bot": bot, "task_queue": task_queue, "tasks": tasks})
+
+    scheduler.add_job(send_generated, trigger="interval", seconds=5,
+                      kwargs={"bot": bot, "task_queue": task_queue, "tasks": tasks})
     scheduler.start()
 
     register_handlers(dp=dp)

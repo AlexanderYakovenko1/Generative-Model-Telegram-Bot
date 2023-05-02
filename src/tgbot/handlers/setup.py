@@ -1,4 +1,4 @@
-from aiogram import Dispatcher, Router
+from aiogram import Dispatcher
 
 from src.tgbot.handlers.admin import register_admin_handlers
 from src.tgbot.handlers.user import register_user_handlers

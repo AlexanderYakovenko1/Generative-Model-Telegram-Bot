@@ -1,4 +1,3 @@
-from unittest import result
 from aiogram import Bot
 from aiogram.types import FSInputFile
 from src.task_queue import TaskQueue

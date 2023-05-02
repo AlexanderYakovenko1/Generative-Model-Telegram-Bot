@@ -5,7 +5,7 @@ from src.config import load_config
 
 
 def verify():
-    """Verifies that model can be loaded, download weights if not."""
+    """Verify that model can be loaded, download weights if not."""
     config = load_config()
     load_model(config.ms.model_path)
 

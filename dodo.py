@@ -36,7 +36,7 @@ def task_check():
     """Perform style checks and run tests."""
     return {
         'actions': None,
-        'task_dep': ['style', 'pydocstyle', 'test']
+        'task_dep': ['style', 'docstyle', 'test']
     }
 
 
