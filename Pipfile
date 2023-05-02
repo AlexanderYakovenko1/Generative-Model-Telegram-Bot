@@ -1,0 +1,36 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+torch = "*"
+torchvision = "*"
+torchaudio = "*"
+aiogram = "==3.*"
+uvloop = "*"
+diffusers = "*"
+requests = "*"
+fastapi = "*"
+pydantic = "*"
+aiogram-dialog = "*"
+googletrans = "*"
+apscheduler = "==3.8.1"
+uvicorn = "*"
+transformers = "*"
+xformers = "*"
+pillow = "*"
+accelerate = "*"
+
+[dev-packages]
+pytest = "*"
+doit = "*"
+sphinx = "*"
+flake8 = "*"
+pydocstyle = "*"
+
+[requires]
+python_version = "3.10"
+
+[pipenv]
+allow_prereleases = true

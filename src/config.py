@@ -1,7 +1,7 @@
 """Bot configuration file."""
 
 #: Path to controlnet weights
-MODEL_PATH = "/home/vmeshchaninov/Education/Generative-Model-Telegram-Bot/models"
+MODEL_PATH = "./assets"
 
 #: Identifier of telegram bot, filled on startup
 BOT_ID = None
