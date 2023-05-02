@@ -1,3 +1,4 @@
+"""Prompted image generation functions."""
 import os
 from typing import Dict, Any
 from uuid import uuid4
@@ -18,6 +19,7 @@ translator = Translator()
 
 
 def generate_image(controlnet, prompt, control_image=None):
+    """Worker function for generating image."""
     if control_image is not None:
         control_image = ImageOps.invert(control_image)
     image = controlnet.generate_image(prompt, control_image)
@@ -25,13 +27,14 @@ def generate_image(controlnet, prompt, control_image=None):
 
 
 async def generate(m: Message, task_queue: TaskQueue, tasks: Dict[str, Any]):
+    """Handle /generate call."""
     global translator
     try:
         raw_prompt = m.text.split(' ', 1)[1]
         prompt = translator.translate(raw_prompt, dest="en").text
-        
+
         task_id = str(uuid4())
-        
+
         if task_queue.put_task(task_id, generate_image, prompt):
             tasks[task_id] = m.chat.id
             await m.reply(f"Ваш запрос на генерацию по затравке {raw_prompt} поставлен в очередь")
@@ -43,10 +46,12 @@ async def generate(m: Message, task_queue: TaskQueue, tasks: Dict[str, Any]):
 
 
 def register_generate(dp: Dispatcher):
+    """Register /generate bot call."""
     dp.message.register(generate, Command(commands=["generate"]))
 
 
 async def sketch(m: Message, state: FSMContext):
+    """Handle /sketch call."""
     global translator
     await state.clear()
 
@@ -65,16 +70,18 @@ async def sketch(m: Message, state: FSMContext):
         await state.update_data(prompt=prompt)
         await state.update_data(task_id=task_id)
         await state.set_state(SketchStates.sketch)
-    
+
     except IndexError:
         await m.reply("Неверный формат ввода затраки. Попробуйте ещё раз /sketch [затравка]")
 
 
 def register_sketch(dp: Dispatcher):
+    """Register /sketch bot call."""
     dp.message.register(sketch, Command(commands=["sketch"]))
 
 
 async def sketch_prompted(m: Message, bot: Bot, state: FSMContext, task_queue: TaskQueue, tasks: Dict[str, Any]):
+    """Handle /sketch call."""
     config = load_config()
 
     data = await state.get_data()
@@ -91,22 +98,31 @@ async def sketch_prompted(m: Message, bot: Bot, state: FSMContext, task_queue: T
 
     if task_queue.put_task(task_id, generate_image, prompt, sketch):
         tasks[task_id] = m.chat.id
-        await m.reply(f"Ваш запрос на генерацию по наброску поставлен в очередь")
+        await m.reply("Ваш запрос на генерацию по наброску поставлен в очередь")
     else:
         await m.reply("Попробуйте позже, очередь переполнена")
 
 
 def register_sketch_prompted(dp: Dispatcher):
+    """Register /sketch bot call."""
     dp.message.register(sketch_prompted, SketchStates.sketch)
 
+
 async def update_prompt(m: Message):
+    """Handle /update_prompt call."""
     await m.reply("Not Implemented Yet")
+
 
 def register_update_prompt(dp: Dispatcher):
+    """Register /update_prompt bot call."""
     dp.message.register(update_prompt, Command(commands=["update_prompt"]))
 
+
 async def update_sketch(m: Message):
+    """Handle /update_sketch call."""
     await m.reply("Not Implemented Yet")
 
+
 def register_update_sketch(dp: Dispatcher):
+    """Register /update_sketch bot call."""
     dp.message.register(update_sketch, Command(commands=["update_sketch"]))
