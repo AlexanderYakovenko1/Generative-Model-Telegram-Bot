@@ -53,3 +53,9 @@ def task_app():
         'actions': ['python src/tgbot/__main__.py'],
         'task_dep': ['verify_model']
     }
+
+def task_gitclean():
+    """Remove all generated files."""
+    return {
+        'actions': ['git clean -xdf']
+    }

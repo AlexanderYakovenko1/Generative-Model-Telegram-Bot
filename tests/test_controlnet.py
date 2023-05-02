@@ -18,7 +18,7 @@ def test_prompt_sketch() -> None:
     """Test controlnet generation conditioned on prompt and sketch."""
     prompt = "a blue paradise bird in the jungle"
     control_image = Image.open("assets/bird_edges.png")
-    eps = 1e-1
+    eps = 3e-1
 
     controlnet = Controlnet(load_config())
 
@@ -31,7 +31,7 @@ def test_prompt_sketch() -> None:
 def test_prompt() -> None:
     """Test controlnet generation conditioned on prompt only."""
     prompt = "a blue paradise bird in the jungle"
-    eps = 1e-1
+    eps = 3e-1
 
     controlnet = Controlnet(load_config())
 

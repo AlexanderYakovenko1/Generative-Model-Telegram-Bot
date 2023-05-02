@@ -21,6 +21,7 @@ transformers = "*"
 xformers = "*"
 pillow = "*"
 accelerate = "*"
+doit = "*"
 
 [dev-packages]
 pytest = "*"
