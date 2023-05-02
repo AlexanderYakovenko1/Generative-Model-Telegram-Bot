@@ -15,11 +15,10 @@ from src.task_queue import TaskQueue
 from src.tgbot.states.sketch_states import SketchStates
 from src.config import load_config
 
-
 translator = Translator()
 
-
-translation = gettext.translation('controlnetbot', os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "locale"), fallback=True)
+translation = gettext.translation('controlnetbot', os.path.join(os.path.dirname(__file__),
+                                                                "..", "..", "..", "..", "locale"), fallback=True)
 _ = translation.gettext
 
 
@@ -42,7 +41,8 @@ async def generate(m: Message, task_queue: TaskQueue, tasks: Dict[str, Any]):
 
         if task_queue.put_task(task_id, generate_image, prompt):
             tasks[task_id] = m.chat.id
-            await m.reply(_("Ваш запрос на генерацию по затравке {raw_prompt} поставлен в очередь").format(raw_prompt=raw_prompt))
+            await m.reply(
+                _("Ваш запрос на генерацию по затравке {raw_prompt} поставлен в очередь").format(raw_prompt=raw_prompt))
         else:
             await m.reply(_("Попробуйте позже, очередь переполнена"))
 
@@ -68,8 +68,8 @@ async def sketch(m: Message, state: FSMContext):
 
         await m.reply(
             _("Для генерации будет использована затравка: {raw_prompt}. "
-            "Ниже вам предложен холст для рисования. "
-            "Следущим сообщением отправьте ваш набросок.").format(raw_prompt=raw_prompt)
+              "Ниже вам предложен холст для рисования. "
+              "Следущим сообщением отправьте ваш набросок.").format(raw_prompt=raw_prompt)
         )
         await m.reply_photo(photo=config.ms.bg_file_id)
         await state.update_data(prompt=prompt)

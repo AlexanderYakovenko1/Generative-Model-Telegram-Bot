@@ -6,7 +6,8 @@ from src.config import load_config
 import os
 import gettext
 
-translation = gettext.translation('controlnetbot', os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "locale"), fallback=True)
+translation = gettext.translation('controlnetbot', os.path.join(os.path.dirname(__file__),
+                                                                "..", "..", "..", "..", "locale"), fallback=True)
 _ = translation.gettext
 
 

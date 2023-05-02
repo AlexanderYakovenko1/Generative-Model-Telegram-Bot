@@ -54,8 +54,16 @@ def task_app():
         'task_dep': ['verify_model']
     }
 
+
 def task_gitclean():
     """Remove all generated files."""
     return {
         'actions': ['git clean -xdf']
+    }
+
+
+def task_english():
+    """Switch to English language."""
+    return {
+        'actions': ['pybabel compile -D controlnetbot -d locale -l en']
     }

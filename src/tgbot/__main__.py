@@ -29,6 +29,7 @@ logger = logging.getLogger(__name__)
 translation = gettext.translation("controlnetbot", "locale", fallback=True)
 _ = translation.gettext
 
+
 def parse_args():
     """Parse CLI arguments."""
     parser = argparse.ArgumentParser()
