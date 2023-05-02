@@ -1,3 +1,4 @@
+"""Set up all user-bot interactions."""
 from aiogram import Dispatcher
 
 from .start import register_start
@@ -6,6 +7,7 @@ from .generation import register_generate, register_sketch, register_sketch_prom
 
 
 def register_user_handlers(dp: Dispatcher):
+    """Register user commands."""
     register_start(dp)
     register_generate(dp)
     register_sketch(dp)
