@@ -7,8 +7,9 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram.utils.text_decorations import html_decoration as fmt
 
-
-translation = gettext.translation('controlnetbot', os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "locale"), fallback=True)
+translation = gettext.translation('controlnetbot',
+                                  os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "locale"),
+                                  fallback=True)
 _ = translation.gettext
 
 
@@ -16,9 +17,9 @@ async def user_start(m: Message):
     """Handle first interaction with bot."""
     await m.reply(
         _("Приветствую, {user}. "
-        "Этот бот может генерировать изображние по запросу, а так же наброску. "
-        "Для генерации по запросу воспользуйся командой /generate [затравка], по наброску /sketch [затравка]"
-        ).format(user=fmt.italic(m.from_user.full_name))
+          "Этот бот может генерировать изображние по запросу, а так же наброску. "
+          "Для генерации по запросу воспользуйся командой /generate [затравка], по наброску /sketch [затравка]"
+          ).format(user=fmt.italic(m.from_user.full_name))
     )
 
 
