@@ -36,7 +36,7 @@ class SettingExtractor(BaseSettings):
     MS__BG_FILE_ID: str = "AgACAgIAAxkBAAIBDmRQaD7y8uejBFHGWm1OYXXOYj-jAAI7zDEbWpqBSjr92JS1EVa3AQADAgADeAADLwQ"
     MS__NUM_INFERENCE_STEPS: int = 20
 
-    TS__ASSETS_PATH: str = "./assets"
+    TS__ASSETS_PATH: str = "./assets/"
 
 
 class Settings(BaseSettings):

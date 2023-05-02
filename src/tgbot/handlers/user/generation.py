@@ -2,6 +2,7 @@
 import os
 from typing import Dict, Any
 from uuid import uuid4
+import gettext
 
 from aiogram import Dispatcher, Bot
 from aiogram.filters import Command
@@ -16,6 +17,10 @@ from src.config import load_config
 
 
 translator = Translator()
+
+
+translation = gettext.translation('controlnetbot', os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "locale"), fallback=True)
+_ = translation.gettext
 
 
 def generate_image(controlnet, prompt, control_image=None):
@@ -37,12 +42,12 @@ async def generate(m: Message, task_queue: TaskQueue, tasks: Dict[str, Any]):
 
         if task_queue.put_task(task_id, generate_image, prompt):
             tasks[task_id] = m.chat.id
-            await m.reply(f"Ваш запрос на генерацию по затравке {raw_prompt} поставлен в очередь")
+            await m.reply(_("Ваш запрос на генерацию по затравке {raw_prompt} поставлен в очередь").format(raw_prompt=raw_prompt))
         else:
-            await m.reply("Попробуйте позже, очередь переполнена")
+            await m.reply(_("Попробуйте позже, очередь переполнена"))
 
     except IndexError:
-        await m.reply("Неверный формат ввода затраки. Попробуйте ещё раз /generate [затравка]")
+        await m.reply(_("Неверный формат ввода затраки. Попробуйте ещё раз /generate [затравка]"))
 
 
 def register_generate(dp: Dispatcher):
@@ -62,9 +67,9 @@ async def sketch(m: Message, state: FSMContext):
         config = load_config()
 
         await m.reply(
-            f"Для генерации будет использована затравка: {raw_prompt}. "
+            _("Для генерации будет использована затравка: {raw_prompt}. "
             "Ниже вам предложен холст для рисования. "
-            "Следущим сообщением отправьте ваш набросок."
+            "Следущим сообщением отправьте ваш набросок.").format(raw_prompt=raw_prompt)
         )
         await m.reply_photo(photo=config.ms.bg_file_id)
         await state.update_data(prompt=prompt)
@@ -72,7 +77,7 @@ async def sketch(m: Message, state: FSMContext):
         await state.set_state(SketchStates.sketch)
 
     except IndexError:
-        await m.reply("Неверный формат ввода затраки. Попробуйте ещё раз /sketch [затравка]")
+        await m.reply(_("Неверный формат ввода затраки. Попробуйте ещё раз /sketch [затравка]"))
 
 
 def register_sketch(dp: Dispatcher):
@@ -98,9 +103,9 @@ async def sketch_prompted(m: Message, bot: Bot, state: FSMContext, task_queue: T
 
     if task_queue.put_task(task_id, generate_image, prompt, sketch):
         tasks[task_id] = m.chat.id
-        await m.reply("Ваш запрос на генерацию по наброску поставлен в очередь")
+        await m.reply(_("Ваш запрос на генерацию по наброску поставлен в очередь"))
     else:
-        await m.reply("Попробуйте позже, очередь переполнена")
+        await m.reply(_("Попробуйте позже, очередь переполнена"))
 
 
 def register_sketch_prompted(dp: Dispatcher):
