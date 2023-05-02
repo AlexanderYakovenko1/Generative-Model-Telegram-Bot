@@ -26,7 +26,7 @@ from src.config import load_config
 
 logger = logging.getLogger(__name__)
 
-translation = gettext.translation("controlnetbot", "locale", fallback=False)
+translation = gettext.translation("controlnetbot", "locale", fallback=True)
 _ = translation.gettext
 
 def parse_args():
