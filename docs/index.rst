@@ -18,6 +18,8 @@ Welcome to Generative model Telegram Bot's documentation!
 +--------------+---------------+
 |    |input|   |    |output|   |
 +--------------+---------------+
+| Prompt: `cat 4k hdr`         |
++--------------+---------------+
 
 This is the developer documentation to the source code of the bot.
 
