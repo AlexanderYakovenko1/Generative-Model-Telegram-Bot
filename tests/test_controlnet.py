@@ -2,7 +2,7 @@
 import numpy as np
 from PIL import Image
 
-import src.config as config
+from src.config import load_config
 from src.controlnet import Controlnet
 
 
@@ -20,7 +20,7 @@ def test_prompt_sketch() -> None:
     control_image = Image.open("assets/bird_edges.png")
     eps = 1e-1
 
-    controlnet = Controlnet(config)
+    controlnet = Controlnet(load_config())
 
     image_pred = controlnet.generate_image(prompt=prompt, control_image=control_image)
     image_real = Image.open('assets/image_test_prompt_scetch.png')
@@ -33,7 +33,7 @@ def test_prompt() -> None:
     prompt = "a blue paradise bird in the jungle"
     eps = 1e-1
 
-    controlnet = Controlnet(config)
+    controlnet = Controlnet(load_config())
 
     image_pred = controlnet.generate_image(prompt=prompt, seed=42)
     image_real = Image.open('assets/image_test_prompt.png')
