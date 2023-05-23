@@ -25,14 +25,14 @@ async def set_commands(bot: Bot, settings: Settings):
             command="sketch",
             description=_("Сгенерировать изображение по наброску"),
         ),
-        BotCommand(
-            command="update_prompt",
-            description=_("Перерисовать с новой затравкой"),
-        ),
-        BotCommand(
-            command="update_sketch",
-            description=_("Перерисовать скетч"),
-        ),
+        # BotCommand(
+        #     command="update_prompt",
+        #     description=_("Перерисовать с новой затравкой"),
+        # ),
+        # BotCommand(
+        #     command="update_sketch",
+        #     description=_("Перерисовать скетч"),
+        # ),
     ]
 
     await bot.set_my_commands(commands=commands, scope=BotCommandScopeDefault())

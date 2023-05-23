@@ -51,7 +51,10 @@ def task_app_ru():
     """Run the app."""
     return {
         'actions': ['LC_ALL=ru_RU.UTF-8 python src/tgbot/__main__.py'],
-        'task_dep': ['verify_model', 'russian']
+        'task_dep': [
+            'verify_model',
+            'russian'
+        ]
     }
 
 
@@ -59,7 +62,10 @@ def task_app_en():
     """Run the app."""
     return {
         'actions': ['LC_ALL=en_US.UTF-8 python src/tgbot/__main__.py'],
-        'task_dep': ['verify_model', 'english']
+        'task_dep': [
+            # 'verify_model',
+            'english'
+        ]
     }
 
 def task_gitclean():
