@@ -47,13 +47,20 @@ def task_verify_model():
     }
 
 
-def task_app():
+def task_app_ru():
     """Run the app."""
     return {
-        'actions': ['python src/tgbot/__main__.py'],
-        'task_dep': ['verify_model']
+        'actions': ['LC_ALL=ru_RU.UTF-8 python src/tgbot/__main__.py'],
+        'task_dep': ['verify_model', 'russian']
     }
 
+
+def task_app_en():
+    """Run the app."""
+    return {
+        'actions': ['LC_ALL=en_US.UTF-8 python src/tgbot/__main__.py'],
+        'task_dep': ['verify_model', 'english']
+    }
 
 def task_gitclean():
     """Remove all generated files."""
@@ -63,7 +70,14 @@ def task_gitclean():
 
 
 def task_english():
-    """Switch to English language."""
+    """Compile English language."""
     return {
         'actions': ['pybabel compile -D controlnetbot -d locale -l en']
+    }
+
+
+def task_russian():
+    """Compile Russian language."""
+    return {
+        'actions': ['pybabel compile -D controlnetbot -d locale -l ru']
     }

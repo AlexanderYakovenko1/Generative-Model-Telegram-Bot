@@ -7,7 +7,7 @@ import os
 import gettext
 
 translation = gettext.translation('controlnetbot', os.path.join(os.path.dirname(__file__),
-                                                                "..", "..", "..", "..", "locale"), fallback=True)
+                                                                "..", "..", "..", "..", "locale"))
 _ = translation.gettext
 
 

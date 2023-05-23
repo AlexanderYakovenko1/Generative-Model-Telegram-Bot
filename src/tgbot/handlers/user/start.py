@@ -8,8 +8,7 @@ from aiogram.types import Message
 from aiogram.utils.text_decorations import html_decoration as fmt
 
 translation = gettext.translation('controlnetbot',
-                                  os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "locale"),
-                                  fallback=True)
+                                  os.path.join(os.path.dirname(__file__), "..", "..", "..", "..", "locale"))
 _ = translation.gettext
 
 
