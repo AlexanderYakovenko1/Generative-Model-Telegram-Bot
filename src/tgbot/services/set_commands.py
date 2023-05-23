@@ -6,8 +6,7 @@ from aiogram import Bot
 from aiogram.types import BotCommand, BotCommandScopeChat, BotCommandScopeDefault
 from src.config import Settings
 
-translation = gettext.translation('controlnetbot', os.path.join(os.path.dirname(__file__), "..", "..", "..", "locale"),
-                                  fallback=True)
+translation = gettext.translation('controlnetbot', os.path.join(os.path.dirname(__file__), "..", "..", "..", "locale"))
 _ = translation.gettext
 
 

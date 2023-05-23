@@ -18,7 +18,7 @@ from src.config import load_config
 translator = Translator()
 
 translation = gettext.translation('controlnetbot', os.path.join(os.path.dirname(__file__),
-                                                                "..", "..", "..", "..", "locale"), fallback=True)
+                                                                "..", "..", "..", "..", "locale"))
 _ = translation.gettext
 
 
