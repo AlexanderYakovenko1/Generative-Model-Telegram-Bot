@@ -35,7 +35,15 @@ async def generate(m: Message, task_queue: TaskQueue, tasks: Dict[str, Any]):
     global translator
     try:
         raw_prompt = m.text.split(' ', 1)[1]
-        prompt = translator.translate(raw_prompt, dest="en").text
+        for i in range(5): # retry
+            try:
+                prompt = translator.translate(raw_prompt, dest="en").text
+                break
+            except TypeError:
+                pass
+        else:
+            await m.reply(_("Внутренняя ошибка Google Translate"))
+            return
 
         task_id = str(uuid4())
 
@@ -62,7 +70,17 @@ async def sketch(m: Message, state: FSMContext):
 
     try:
         raw_prompt = m.text.split(' ', 1)[1]
-        prompt = translator.translate(raw_prompt, dest="en").text
+        
+        for i in range(5): # retry
+            try:
+                prompt = translator.translate(raw_prompt, dest="en").text
+                break
+            except TypeError:
+                pass
+        else:
+            await m.reply(_("Внутренняя ошибка Google Translate"))
+            return
+
         task_id = str(uuid4())
         config = load_config()
 
